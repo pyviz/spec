@@ -12,23 +12,23 @@
 - Created: 2019-07-19
 
 ## Abstract
-This spec describes a proposed shared API for accessing objects from various plotting libraries.
+This spec describes a proposed shared Python API for accessing objects from various plotting libraries.
 
-In this notebook we will use **figure** to refer to any object that has a visible representation but which can also be saved, exported, etc. This includes generic visualizations or animation that may or may not be a "plot" (axes, ticks, etc)?
+In this notebook we will use **figure** to refer to any object that has a visible representation but that can also be saved, exported, etc. This includes generic visualizations or animations that may or may not be considered a "plot" with axes, ticks, and so on.```
 
 When detailing a method, this spec uses FIGURE to refer to any specific figure object and LIBRARY to refer to any specific visualization library.
 
 ## If a method doesn't make sense
-If a given operation doesn't make sense for that library, then it can satisfy the spec by simply having that method return a message to that effect ("JSON support not available in LIBRARY").
+If a given operation doesn't make sense for that library, then it can satisfy the spec by simply having that method return a message to that effect ("Unsupported: LIBRARY does not provide JSON output").
 
 ## Jupyter methods
-Every library that supports rendering in Jupyter should support the various IPython rich display methods, i.e. `repr_html`, `repr_png`, `_ipython_display_`.
+Every library that supports rendering in Jupyter should support at least one of the various IPython rich display methods, i.e. `_repr_html_`, `_repr_png_`, `_ipython_display_`.
 
 ## `.show()`
 Every figure should have the ability to render itself.
 
 ### Proposal
- 1) The top-level figure class has a `.show()` method that can be called without arguments to display the figure as a side-effect.
+ 1) The top-level figure class should have a `.show()` method that can be called without arguments to display the figure as a side-effect.
  2) The optional `renderer` kwarg can be used to override the current default renderer. e.g.:
     - `FIGURE.show(renderer='png')` to display the figure as a static png image/
     - `FIGURE.show(renderer='browser')` to display the figure in a browser tab. This works in non-jupyter/IPython contexts.
@@ -46,8 +46,8 @@ Figures should have `FIGURE.save()` method for exporting.
 
 There are several kwargs that `save` should include:
 
- 1) `file`: should be a file object or optionally a path to a file. If a file path is used rather than a file object and that is not supported, the library should raise a sensible error. Can default to some user configured value.
- 2) `output`: should be a file format that the figure can be exported to i.e. `'png'`, `'json'`, `'html'`. The library should set a default output and/or allow the user to configure the output. For instance matplotlib does:
+ 1) `file`: should be a file object or optionally a path to a file. If the LIBRARY does not support file paths and a user provides one rather than a file object, the LIBRARY should raise a sensible error. Can default to some user configured value.
+ 2) `output`: should be a file format that the figure can be exported to i.e. `'png'`, `'jpg'`, `'json'`, `'html'`. The library should set a default output and/or allow the user to configure the output. For instance matplotlib does:
     > If format is not set, then the output format is inferred from the extension of `fname`, if any, and from `rcParams["savefig.format"]` otherwise. If `format` is set, it determines the output format.
     >
     >from: [matplotlib.pyplot.savefig](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.savefig.html)
