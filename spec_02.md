@@ -22,7 +22,7 @@ When detailing a method, this spec uses FIGURE to refer to any specific figure o
 If a given operation doesn't make sense for that library, then it can satisfy the spec by simply having that method return a message to that effect ("Unsupported: LIBRARY does not provide JSON output").
 
 ## Jupyter methods
-Every library that supports rendering in Jupyter should support at least one of the various IPython rich display methods, i.e. `_repr_html_`, `_repr_png_`, `_ipython_display_`.
+Every library that supports rendering in Jupyter should support at least one of the various IPython rich display methods, i.e. `_repr_mimebundle_`, `_repr_html_`, `_repr_png_`, `_ipython_display_`.
 
 ## `.show()`
 Every figure should have the ability to display itself.
