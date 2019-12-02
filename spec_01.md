@@ -22,7 +22,7 @@ If a given operation doesn't make sense for that library, then it can satisfy th
 Calling `.__pyviz_spec__()` on the library should return a list of the specs that the library complies with. It should include the version of the spec that is being used.
 
 ```python
->>> LIBRARY.__spec_version__()
+>>> LIBRARY.__pyviz_spec__()
 {1: 0.1, 2: 0.1}
 ```
 
