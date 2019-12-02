@@ -25,17 +25,17 @@ If a given operation doesn't make sense for that library, then it can satisfy th
 Every library that supports rendering in Jupyter should support at least one of the various IPython rich display methods, i.e. `_repr_html_`, `_repr_png_`, `_ipython_display_`.
 
 ## `.show()`
-Every figure should have the ability to render itself.
+Every figure should have the ability to display itself.
 
 ### Proposal
  1) The top-level figure class should have a `.show()` method that can be called without arguments to display the figure as a side-effect.
- 2) The optional `renderer` kwarg can be used to override the current default renderer. e.g.:
-    - `FIGURE.show(renderer='png')` to display the figure as a static png image.
-    - `FIGURE.show(renderer='browser')` to display the figure in a new browser tab. This works in both jupyter/IPython and non-jupyter/IPython contexts. If the library provides interactivity, an interactive figure is preferred.
+ 2) The optional `output` kwarg can be used to override the current default renderer. e.g.:
+    - `FIGURE.show(output='png')` to display the figure as a static png image.
+    - `FIGURE.show(output='html')` to display the figure in a new browser tab. This works in both jupyter/IPython and non-jupyter/IPython contexts. If the library provides interactivity, an interactive figure is preferred.
 
 After this kwarg, `show` can have any additional kwargs needed.
 
-**NOTE**: When specifying options for `renderer`, `jpg` is preferred to `jpeg`.
+**NOTE**: When specifying options for `output`, `jpg` is preferred to `jpeg`.
 
 #### What to return
 `FIGURE.show()` should return `None`.
