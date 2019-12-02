@@ -30,8 +30,15 @@ Every figure should have the ability to render itself.
 ### Proposal
  1) The top-level figure class should have a `.show()` method that can be called without arguments to display the figure as a side-effect.
  2) The optional `renderer` kwarg can be used to override the current default renderer. e.g.:
-    - `FIGURE.show(renderer='png')` to display the figure as a static png image/
-    - `FIGURE.show(renderer='browser')` to display the figure in a browser tab. This works in non-jupyter/IPython contexts.
+    - `FIGURE.show(renderer='png')` to display the figure as a static png image.
+    - `FIGURE.show(renderer='browser')` to display the figure in a new browser tab. This works in both jupyter/IPython and non-jupyter/IPython contexts. If the library provides interactivity, an interactive figure is preferred.
+
+After this kwarg, `show` can have any additional kwargs needed.
+
+**NOTE**: When specifying options for `renderer`, `jpg` is preferred to `jpeg`.
+
+#### What to return
+`FIGURE.show()` should return `None`.
 
 ## `.save()` method
 Every figure should have the knowledge of how to export itself to a file on disk.
@@ -47,14 +54,16 @@ Figures should have `FIGURE.save()` method for exporting.
 There are several kwargs that `save` should include:
 
  1) `file`: should be a file object or optionally a path to a file. If the LIBRARY does not support file paths and a user provides one rather than a file object, the LIBRARY should raise a sensible error. Can default to some user configured value.
- 2) `output`: should be a file format that the figure can be exported to i.e. `'png'`, `'jpg'`, `'json'`, `'html'`. The library should set a default output and/or allow the user to configure the output. For instance matplotlib does:
+ 2) `output`: should be a file format that the figure can be exported to i.e. `'png'`, `'jpg'`, `'svg'`, `'json'`, `'html'`. The library should set a default output and/or allow the user to configure the output. For instance matplotlib does:
     > If format is not set, then the output format is inferred from the extension of `fname`, if any, and from `rcParams["savefig.format"]` otherwise. If `format` is set, it determines the output format.
     >
     >from: [matplotlib.pyplot.savefig](https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.savefig.html)
 
 **NOTE**: These kwargs are deliberately selected to avoid builtins in python 3 which precludes `format`, but no longer precludes `file`.
 
-After these two, save can have any additional kwargs needed.
+After these two, `save` can have any additional kwargs needed.
+
+**NOTE**: When specifying options for `output`, `jpg` is preferred to `jpeg`.
 
 #### What to return
 `FIGURE.save()` should return the file path or object that was saved to.

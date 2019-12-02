@@ -18,8 +18,8 @@ This spec uses LIBRARY to refer to any specific visualization library.
 ## If a method doesn't make sense
 If a given operation doesn't make sense for that library, then it can satisfy the spec by simply having that method return a message to that effect ("Unsupported: LIBRARY does not provide JSON output").
 
-## `.__spec_version__()` method
-Calling `.__spec_version__()` on the library should return a list of the specs that the library complies with. It should include the version of the spec that is being used.
+## `.__pyviz_spec__()` method
+Calling `.__pyviz_spec__()` on the library should return a list of the specs that the library complies with. It should include the version of the spec that is being used.
 
 ```python
 >>> LIBRARY.__spec_version__()
@@ -36,13 +36,12 @@ Each library should provide a uniform way to enable itself in jupyter notebook &
 > - holoviews has `hv.extension('bokeh')`
 > - hvplot has `import hvplot.pandas`
 
-### Proposal 1 : magics
-Every library should define something like `%enable_LIBRARY`
-
-### Proposal 2: function call (preferred)
+### Proposal: function call
 Provide an `enable()` function call on the library that can take an optional `output` kwarg, but provides a sensible default.
 
 `LIBRARY.enable()` == `LIBRARY.enable(output='notebook')`
+
+**NOTE**: This spec doesn't cover the case where you are in a notebook and want to generate a figure separately from a notebook.
 
 #### Context
 A function call is preferred over magics because some tools need a specification that is usable both within and outside of jupyter. We can always add special cases to deal with magics, but prefer just to have a normal Python call that can register things with Jupyter if it's available but doesn't otherwise cause syntax errors (if not skipped) or missing functionality (if skipped) outside of Jupyter/IPython.
